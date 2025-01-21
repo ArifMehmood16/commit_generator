@@ -84,7 +84,7 @@ def update_task_scheduler():
     # # Generate random hour (0-23) and minute (0-59)
     # random_hour = random.randint(0, 23)
     # random_minute = random.randint(0, 59)
-    random_hour = 17
+    random_hour = 14
     random_minute = 25
 
     # Define task name
