@@ -2,7 +2,7 @@
 import os
 import random
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 import shutil
 import win32com.client
 
@@ -110,7 +110,8 @@ def update_task_scheduler():
     # Create a new task
     task_def = scheduler.NewTask(0)
     trigger = task_def.Triggers.Create(1)  # Daily trigger
-    trigger.StartBoundary = datetime.now().strftime(f"%Y-%m-%dT{random_hour:02}:{random_minute:02}:00")
+    start_time = datetime.now() + timedelta(days=1)
+    trigger.StartBoundary = start_time.strftime(f"%Y-%m-%dT{random_hour:02}:{random_minute:02}:00")
     action = task_def.Actions.Create(0)  # Execute action
     action.Path = python_path
     action.Arguments = f'"{script_path}"'
@@ -128,7 +129,7 @@ def update_task_scheduler():
         0,
     )
 
-    print(f"Task Scheduler updated to run at {random_hour:02}:{random_minute:02}.")
+    print(f"Task Scheduler updated to run at {random_hour:02}:{random_minute:02} on {start_time.strftime('%Y-%m-%d')}.")
 
 
 def main():
@@ -138,7 +139,7 @@ def main():
         
         iterations = 1
         if output:
-            iterations = 7
+            iterations = 10
         for i in range(iterations):
             current_number = read_number()
             new_number = current_number + 1
